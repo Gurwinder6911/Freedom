@@ -17,6 +17,7 @@ public class EnemyScript : MonoBehaviour
     [SerializeField] float attackRange;
 
     NavMeshAgent agent;
+    Animator animator;
 
     bool isWalkPointSet;
     bool isAttacked;
@@ -28,6 +29,7 @@ public class EnemyScript : MonoBehaviour
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
+        animator = GetComponent<Animator>();
         player = GameObject.Find("Player").transform;
     }
 
@@ -36,6 +38,8 @@ public class EnemyScript : MonoBehaviour
     {
         isPlayerInRange = Physics.CheckSphere(transform.position, sightRange, playerCheck);
         isPlayerInAttackRange = Physics.CheckSphere(transform.position, attackRange, playerCheck);
+
+        animator.SetFloat("walkPoint", agent.velocity.magnitude);
 
         if (!isPlayerInRange && !isPlayerInAttackRange)
         {
