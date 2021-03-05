@@ -6,6 +6,7 @@ public class PlayerPickUp : MonoBehaviour
 {
     [SerializeField] Transform player;
     [SerializeField] Transform posPickup;
+    [SerializeField] LayerMask wallLayer;
 
 
     private Rigidbody rigidbody;

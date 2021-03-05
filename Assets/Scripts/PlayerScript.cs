@@ -7,7 +7,7 @@ using UnityEngine;
 public class PlayerScript : MonoBehaviour
 {
     [SerializeField] float health;
-    [SerializeField] float speed = 2F;
+    [SerializeField] float speed = 1.5F;
     [SerializeField] float extraSpeed = 2F;
     [SerializeField] float jumpSpeed = 2F;
     [SerializeField] float gravity = 7F;
@@ -18,11 +18,16 @@ public class PlayerScript : MonoBehaviour
     [SerializeField] LayerMask groundMask;
 
     private CharacterController character;
-    private Vector3 velocity;
+    private Vector3 jumpVelocity;
+    private Vector3 direction;
     private Animator animator;
+
     private bool isOnGround;
     private bool isSprinting;
+    private bool isJump;
+
     private float smoothVelo;
+    private float timer = 0F;
 
 
     void Start()
@@ -31,6 +36,7 @@ public class PlayerScript : MonoBehaviour
         animator = GetComponent<Animator>();
 
         isSprinting = false;
+        isDash = false;
         Cursor.lockState = CursorLockMode.Locked;
     }
 
@@ -47,7 +53,7 @@ public class PlayerScript : MonoBehaviour
     {
         float horizontal = Input.GetAxisRaw("Horizontal");
         float vertical = Input.GetAxisRaw("Vertical");
-        Vector3 direction = new Vector3(horizontal, 0F, vertical).normalized;
+        direction = new Vector3(horizontal, 0F, vertical).normalized;
 
         if (direction.magnitude >= 0.1F)
         {
@@ -58,8 +64,8 @@ public class PlayerScript : MonoBehaviour
             character.Move(forwardDirection.normalized * speed * Time.deltaTime);
         }
 
-        velocity.y += gravity * Time.deltaTime;
-        character.Move(velocity * Time.deltaTime);
+        jumpVelocity.y += gravity * Time.deltaTime;
+        character.Move(jumpVelocity * Time.deltaTime);
     }
 
     private void RunningAnimation()
@@ -90,27 +96,33 @@ public class PlayerScript : MonoBehaviour
     {
         isOnGround = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
 
-        if (isOnGround && velocity.y < 0)
+        if (isOnGround && jumpVelocity.y < 0)
         {
-            velocity.y = -2F;
+            jumpVelocity.y = -3.5F;
         }
     }
 
     private void PlayerJump()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && isOnGround)
+        if (Input.GetKeyDown(KeyCode.Space) && isOnGround && timer <= 0F && direction.magnitude >= 1F)
         {
-            velocity.y = Mathf.Sqrt(jumpSpeed * -2 * gravity);
+            isJump = true;
+            jumpVelocity.y = Mathf.Sqrt(jumpSpeed * -2 * gravity);
+            timer = 1.5F;
         }
 
-        if (!isOnGround)
+        if (Input.GetKeyDown(KeyCode.Space) && isJump && direction.magnitude >= 1F)
         {
             animator.SetBool("isJump", true);
         }
         else
         {
             animator.SetBool("isJump", false);
+
+            isJump = false;
         }
+
+        timer -= Time.deltaTime;
     }
 
     private void Rotation(Vector3 direction, out float directAngle)
