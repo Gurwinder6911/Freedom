@@ -1,0 +1,166 @@
+Using pre-set license
+Built from '2020.2/release' branch; Version is '2020.2.1f1 (270dd8c3da1c) revision 2559448'; Using compiler version '192528614'; Build Type 'Release'
+OS: 'Windows 10  (10.0.0) 64bit' Language: 'en' Physical Memory: 16284 MB
+BatchMode: 1, IsHumanControllingUs: 0, StartBugReporterOnCrash: 0, Is64bit: 1, IsPro: 0
+
+ COMMAND LINE ARGUMENTS:
+C:\Users\sahil\Documents\Unity\2020.2.1f1\Editor\Unity.exe
+-adb2
+-batchMode
+-noUpm
+-name
+AssetImportWorker0
+-projectPath
+E:/Unity/Freedom
+-logFile
+Logs/AssetImportWorker0.log
+-srvPort
+63916
+Successfully changed project path to: E:/Unity/Freedom
+E:/Unity/Freedom
+Using Asset Import Pipeline V2.
+Refreshing native plugins compatible for Editor in 28.59 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Initialize engine version: 2020.2.1f1 (270dd8c3da1c)
+[Subsystems] Discovering subsystems at path C:/Users/sahil/Documents/Unity/2020.2.1f1/Editor/Data/Resources/UnitySubsystems
+[Subsystems] Discovering subsystems at path E:/Unity/Freedom/Assets
+GfxDevice: creating device client; threaded=0
+Direct3D:
+    Version:  Direct3D 11.0 [level 11.1]
+    Renderer: Radeon RX 580 Series (ID=0x67df)
+    Vendor:   
+    VRAM:     8171 MB
+    Driver:   27.20.14501.18003
+Initialize mono
+Mono path[0] = 'C:/Users/sahil/Documents/Unity/2020.2.1f1/Editor/Data/Managed'
+Mono path[1] = 'C:/Users/sahil/Documents/Unity/2020.2.1f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit'
+Mono config path = 'C:/Users/sahil/Documents/Unity/2020.2.1f1/Editor/Data/MonoBleedingEdge/etc'
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56296
+Begin MonoManager ReloadAssembly
+Registering precompiled unity dll's ...
+Register platform support module: C:/Users/sahil/Documents/Unity/2020.2.1f1/Editor/Data/PlaybackEngines/WebGLSupport/UnityEditor.WebGL.Extensions.dll
+Register platform support module: C:/Users/sahil/Documents/Unity/2020.2.1f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
+Registered in 0.002771 seconds.
+Native extension for WindowsStandalone target not found
+Native extension for WebGL target not found
+Refreshing native plugins compatible for Editor in 45.86 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Invoked RoslynAnalysisRunner static constructor.
+RoslynAnalysisRunner will not be running.
+RoslynAnalysisRunner has terminated.
+Mono: successfully reloaded assembly
+- Completed reload, in  2.258 seconds
+Platform modules already initialized, skipping
+Registering precompiled user dll's ...
+Registered in 0.000808 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Native extension for WebGL target not found
+Refreshing native plugins compatible for Editor in 0.43 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Invoked RoslynAnalysisRunner static constructor.
+RoslynAnalysisRunner will not be running.
+RoslynAnalysisRunner has terminated.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.013 seconds
+Platform modules already initialized, skipping
+========================================================================
+Worker process is ready to serve import requests
+Launched and connected shader compiler UnityShaderCompiler.exe after 0.03 seconds
+Refreshing native plugins compatible for Editor in 0.36 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 1136 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 58.4 MB.
+System memory in use after: 58.5 MB.
+
+Unloading 9 unused Assets to reduce memory usage. Loaded Objects now: 1590.
+Total: 2.144200 ms (FindLiveObjects: 0.145900 ms CreateObjectMapping: 0.051200 ms MarkObjects: 1.848000 ms  DeleteObjects: 0.098200 ms)
+
+========================================================================
+Received Import Request.
+  path: Assets/3DGamekit
+  artifactKey: Guid(0f5df3c3953250348a836e709c425bd7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/3DGamekit using Guid(0f5df3c3953250348a836e709c425bd7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'daaf79e2e4d7d1b15573ab30840fdb8d') in 0.017938 seconds
+  Import took 0.022135 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 5.497776 seconds.
+  path: Assets/3DGamekit/Audio
+  artifactKey: Guid(ea56b4eb73863a644a76afff72ff19e1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/3DGamekit/Audio using Guid(ea56b4eb73863a644a76afff72ff19e1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'fa9b9d6424a0015391490dfd41612544') in 0.010466 seconds
+  Import took 0.013106 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 1.451927 seconds.
+  path: Assets/3DGamekit/Audio/Enemies
+  artifactKey: Guid(de2a8b6fd2a371040a7e88290b6d8c5a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/3DGamekit/Audio/Enemies using Guid(de2a8b6fd2a371040a7e88290b6d8c5a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '01e2a6840e36dcb98d58dc77e3727e68') in 0.040294 seconds
+  Import took 0.042713 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 1.015754 seconds.
+  path: Assets/3DGamekit/Audio/Enemies/Spitter
+  artifactKey: Guid(e835088ea25b9774fbb2f2b3b7720cda) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/3DGamekit/Audio/Enemies/Spitter using Guid(e835088ea25b9774fbb2f2b3b7720cda) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b0b05e773848d6467dbc99dcdbce1c71') in 0.013235 seconds
+  Import took 0.015835 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000549 seconds.
+  path: Assets/3DGamekit/Audio/Enemies/Spitter
+  artifactKey: Guid(e835088ea25b9774fbb2f2b3b7720cda) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/3DGamekit/Audio/Enemies/Spitter using Guid(e835088ea25b9774fbb2f2b3b7720cda) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b0b05e773848d6467dbc99dcdbce1c71') in 0.005798 seconds
+  Import took 0.008319 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 1.531681 seconds.
+  path: Assets/3DGamekit/Audio/Enemies/Spitter/Attack
+  artifactKey: Guid(3878163c1c336184da528b01e2da860b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/3DGamekit/Audio/Enemies/Spitter/Attack using Guid(3878163c1c336184da528b01e2da860b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '731f63d546e19fe9e7d6e2a65d99825c') in 0.010523 seconds
+  Import took 0.013439 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.791230 seconds.
+  path: Assets/3DGamekit/Audio/Enemies/Spitter/Attack/Speech
+  artifactKey: Guid(7fac14cf996b8454fbc45df8c16fe134) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/3DGamekit/Audio/Enemies/Spitter/Attack/Speech using Guid(7fac14cf996b8454fbc45df8c16fe134) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '35e443946c05b312cc363bb9f8390bc2') in 0.011053 seconds
+  Import took 0.013703 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 3.250201 seconds.
+  path: Assets/3rdPerson+Fly
+  artifactKey: Guid(4c95cfdd8f630a14d9de417410e1eea5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/3rdPerson+Fly using Guid(4c95cfdd8f630a14d9de417410e1eea5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a8c69ecd833f431a421c30ee188a56f1') in 0.011753 seconds
+  Import took 0.014292 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 7.191188 seconds.
+  path: Assets/3rdPerson+Fly/Scripts
+  artifactKey: Guid(b68cf27312661fb48ae1c6e4e53e15a9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/3rdPerson+Fly/Scripts using Guid(b68cf27312661fb48ae1c6e4e53e15a9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'de9f6a04f3e4af124ac1687cc1a2fe84') in 0.011126 seconds
+  Import took 0.013804 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.920280 seconds.
+  path: Assets/3rdPerson+Fly/Scripts/PlayerScripts
+  artifactKey: Guid(bbbed778c32c9564183f656215edbcd2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/3rdPerson+Fly/Scripts/PlayerScripts using Guid(bbbed778c32c9564183f656215edbcd2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '89ca15ecbfd613875ce77d1d4cddf463') in 0.010344 seconds
+  Import took 0.013058 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 1.457977 seconds.
+  path: Assets/3rdPerson+Fly/Scripts/PlayerScripts/MoveBehaviour.cs
+  artifactKey: Guid(b04cfe015b44cfc4fb97244a8ce150c0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/3rdPerson+Fly/Scripts/PlayerScripts/MoveBehaviour.cs using Guid(b04cfe015b44cfc4fb97244a8ce150c0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c7fc7ebbb3dc03b929c65050097b248b') in 0.044076 seconds
+  Import took 0.046385 seconds .
+
+AssetImportWorkerClient::OnTransportError - code=2 error=End of file
