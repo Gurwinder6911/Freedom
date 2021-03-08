@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+
 [DisallowMultipleComponent]
 public class PlayerScript : MonoBehaviour
 {
@@ -29,6 +31,15 @@ public class PlayerScript : MonoBehaviour
     private float smoothVelo;
     private float timer = 0F;
 
+    //Reusing Sound class as defined in BackgroundMusic for playing sounds
+    [SerializeField]
+    Sound[] jumpSounds;
+
+    [SerializeField]
+    Sound[] takeDamageSounds;
+
+    [SerializeField]
+    Sound[] walkSounds;
 
     void Start()
     {
@@ -37,6 +48,30 @@ public class PlayerScript : MonoBehaviour
 
         isSprinting = false;
         Cursor.lockState = CursorLockMode.Locked;
+
+        for (int i = 0; i < jumpSounds.Length; i++)
+        {
+            GameObject _go = new GameObject("Sound_" + i + "_" + jumpSounds[i].soundName);
+            _go.transform.SetParent(this.transform);
+            jumpSounds[i].SetSource(_go.AddComponent<AudioSource>());
+            
+        }
+
+        for (int i = 0; i < takeDamageSounds.Length; i++)
+        {
+            GameObject _go = new GameObject("Sound_" + i + "_" + jumpSounds[i].soundName);
+            _go.transform.SetParent(this.transform);
+            takeDamageSounds[i].SetSource(_go.AddComponent<AudioSource>());
+
+        }
+
+        for (int i = 0; i < walkSounds.Length; i++)
+        {
+            GameObject _go = new GameObject("Sound_" + i + "_" + walkSounds[i].soundName);
+            _go.transform.SetParent(this.transform);
+            walkSounds[i].SetSource(_go.AddComponent<AudioSource>());
+
+        }
     }
 
     // Update is called once per frame
@@ -72,18 +107,26 @@ public class PlayerScript : MonoBehaviour
         if (Input.GetKey(KeyCode.W))
         {
             animator.SetBool("isRunning", true);
+            var rand = UnityEngine.Random.Range(0, walkSounds.Length - 1);
+            walkSounds[rand].Play();
         }
         else if (Input.GetKey(KeyCode.A))
         {
             animator.SetBool("isRunning", true);
+            var rand = UnityEngine.Random.Range(0, walkSounds.Length - 1);
+            walkSounds[rand].Play();
         }
         else if (Input.GetKey(KeyCode.D))
         {
             animator.SetBool("isRunning", true);
+            var rand = UnityEngine.Random.Range(0, walkSounds.Length - 1);
+            walkSounds[rand].Play();
         }
         else if (Input.GetKey(KeyCode.S))
         {
             animator.SetBool("isRunning", true);
+            var rand = UnityEngine.Random.Range(0, walkSounds.Length - 1);
+            walkSounds[rand].Play();
         }
         else
         {
@@ -108,6 +151,8 @@ public class PlayerScript : MonoBehaviour
             isJump = true;
             jumpVelocity.y = Mathf.Sqrt(jumpSpeed * -2 * gravity);
             timer = 1.5F;
+            var rand = UnityEngine.Random.Range(0, jumpSounds.Length - 1);
+            jumpSounds[rand].Play();
         }
 
         if (Input.GetKeyDown(KeyCode.Space) && isJump && direction.magnitude >= 1F)
@@ -134,6 +179,8 @@ public class PlayerScript : MonoBehaviour
 
     public void HealthDamage(float damage)
     {
+        var rand = UnityEngine.Random.Range(0, takeDamageSounds.Length - 1);
+        takeDamageSounds[rand].Play();
         print("HIT");
     }
 }

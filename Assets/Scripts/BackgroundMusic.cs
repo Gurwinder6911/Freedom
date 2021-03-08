@@ -2,13 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//Class Sound to be shared among all objects that play any sound
+
 [System.Serializable]
-public class Music
+public class Sound
 {
 
     private AudioSource source;
 
-    public string musicName;
+    public string soundName;
     public AudioClip clip;
 
     public void SetSource(AudioSource _source)
@@ -28,41 +30,27 @@ public class Music
 public class BackgroundMusic : MonoBehaviour
 {
     [SerializeField]
-    Music[] music;
+    Sound[] musics;
 
 
     
     // Start is called before the first frame update
     void Start()
     {
-        
-
-        for (int i = 0; i < music.Length; i++)
+        for (int i = 0; i < musics.Length; i++)
         {
-            GameObject _go = new GameObject("Music_" + i + "_" + music[i].musicName);
+            GameObject _go = new GameObject("Music_" + i + "_" + musics[i].soundName);
             _go.transform.SetParent(this.transform);
-            music[i].SetSource(_go.AddComponent<AudioSource>());
+            musics[i].SetSource(_go.AddComponent<AudioSource>());
             
         }
 
-        var rand = Random.Range(0, music.Length-1);
-
-        music[rand].Play();
-
-    }
-
-    public void PlaySound(string _name)
-    {
-        for (int i = 0; i > music.Length; i++)
-        {
-            if (music[i].musicName == _name)
-            {
-                music[i].Play();
-                return;
-            }
-        }
+        var rand = Random.Range(0, musics.Length-1);
+        musics[rand].Play();
 
     }
+
+
 
     // Update is called once per frame
     //void Update()
