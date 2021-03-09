@@ -38,8 +38,8 @@ public class PlayerScript : MonoBehaviour
     [SerializeField]
     Sound[] takeDamageSounds;
 
-    [SerializeField]
-    Sound[] walkSounds;
+    public AudioSource footsteps;
+
 
     void Start()
     {
@@ -65,17 +65,10 @@ public class PlayerScript : MonoBehaviour
 
         }
 
-        for (int i = 0; i < walkSounds.Length; i++)
-        {
-            GameObject _go = new GameObject("Sound_" + i + "_" + walkSounds[i].soundName);
-            _go.transform.SetParent(this.transform);
-            walkSounds[i].SetSource(_go.AddComponent<AudioSource>());
-
-        }
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         CheckingOnGround();
         PlayerMovement();
@@ -107,26 +100,38 @@ public class PlayerScript : MonoBehaviour
         if (Input.GetKey(KeyCode.W))
         {
             animator.SetBool("isRunning", true);
-            var rand = UnityEngine.Random.Range(0, walkSounds.Length - 1);
-            walkSounds[rand].Play();
+            if (footsteps.isPlaying == false)
+            {
+                footsteps.Play();
+            }
+            
         }
         else if (Input.GetKey(KeyCode.A))
         {
             animator.SetBool("isRunning", true);
-            var rand = UnityEngine.Random.Range(0, walkSounds.Length - 1);
-            walkSounds[rand].Play();
+            if (footsteps.isPlaying == false)
+            {
+                footsteps.Play();
+            }
+            
         }
         else if (Input.GetKey(KeyCode.D))
         {
             animator.SetBool("isRunning", true);
-            var rand = UnityEngine.Random.Range(0, walkSounds.Length - 1);
-            walkSounds[rand].Play();
+            if (footsteps.isPlaying == false)
+            {
+                footsteps.Play();
+            }
+            
         }
         else if (Input.GetKey(KeyCode.S))
         {
             animator.SetBool("isRunning", true);
-            var rand = UnityEngine.Random.Range(0, walkSounds.Length - 1);
-            walkSounds[rand].Play();
+            if (footsteps.isPlaying == false)
+            {
+                footsteps.Play();
+            }
+            
         }
         else
         {
