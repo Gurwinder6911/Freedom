@@ -71,23 +71,23 @@ public class PlayerScript : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.W))
         {
-            animator.SetBool("isRunning", true);
+            animator.SetFloat("Running", direction.magnitude);
         }
         else if (Input.GetKey(KeyCode.A))
         {
-            animator.SetBool("isRunning", true);
+            animator.SetFloat("Running", direction.magnitude);
         }
         else if (Input.GetKey(KeyCode.D))
         {
-            animator.SetBool("isRunning", true);
+            animator.SetFloat("Running", direction.magnitude);
         }
         else if (Input.GetKey(KeyCode.S))
         {
-            animator.SetBool("isRunning", true);
+            animator.SetFloat("Running", direction.magnitude);
         }
         else
         {
-            animator.SetBool("isRunning", false);
+            animator.SetFloat("Running", direction.magnitude);
         }
     }
 
