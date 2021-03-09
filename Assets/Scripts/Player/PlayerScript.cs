@@ -3,6 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> e069ea7d583280e84d72f8567210611914636200
 [DisallowMultipleComponent]
 public class PlayerScript : MonoBehaviour
 {
@@ -29,6 +34,18 @@ public class PlayerScript : MonoBehaviour
     private float smoothVelo;
     private float timer = 0F;
 
+<<<<<<< HEAD
+=======
+    //Reusing Sound class as defined in BackgroundMusic for playing sounds
+    [SerializeField]
+    Sound[] jumpSounds;
+
+    [SerializeField]
+    Sound[] takeDamageSounds;
+
+    public AudioSource footsteps;
+
+>>>>>>> e069ea7d583280e84d72f8567210611914636200
 
     void Start()
     {
@@ -37,10 +54,34 @@ public class PlayerScript : MonoBehaviour
 
         isSprinting = false;
         Cursor.lockState = CursorLockMode.Locked;
+<<<<<<< HEAD
     }
 
     // Update is called once per frame
     void Update()
+=======
+
+        for (int i = 0; i < jumpSounds.Length; i++)
+        {
+            GameObject _go = new GameObject("Sound_" + i + "_" + jumpSounds[i].soundName);
+            _go.transform.SetParent(this.transform);
+            jumpSounds[i].SetSource(_go.AddComponent<AudioSource>());
+            
+        }
+
+        for (int i = 0; i < takeDamageSounds.Length; i++)
+        {
+            GameObject _go = new GameObject("Sound_" + i + "_" + jumpSounds[i].soundName);
+            _go.transform.SetParent(this.transform);
+            takeDamageSounds[i].SetSource(_go.AddComponent<AudioSource>());
+
+        }
+
+    }
+
+    // Update is called once per frame
+    void FixedUpdate()
+>>>>>>> e069ea7d583280e84d72f8567210611914636200
     {
         CheckingOnGround();
         PlayerMovement();
@@ -72,18 +113,50 @@ public class PlayerScript : MonoBehaviour
         if (Input.GetKey(KeyCode.W))
         {
             animator.SetBool("isRunning", true);
+<<<<<<< HEAD
+=======
+            if (footsteps.isPlaying == false)
+            {
+                footsteps.Play();
+            }
+            
+>>>>>>> e069ea7d583280e84d72f8567210611914636200
         }
         else if (Input.GetKey(KeyCode.A))
         {
             animator.SetBool("isRunning", true);
+<<<<<<< HEAD
+=======
+            if (footsteps.isPlaying == false)
+            {
+                footsteps.Play();
+            }
+            
+>>>>>>> e069ea7d583280e84d72f8567210611914636200
         }
         else if (Input.GetKey(KeyCode.D))
         {
             animator.SetBool("isRunning", true);
+<<<<<<< HEAD
+=======
+            if (footsteps.isPlaying == false)
+            {
+                footsteps.Play();
+            }
+            
+>>>>>>> e069ea7d583280e84d72f8567210611914636200
         }
         else if (Input.GetKey(KeyCode.S))
         {
             animator.SetBool("isRunning", true);
+<<<<<<< HEAD
+=======
+            if (footsteps.isPlaying == false)
+            {
+                footsteps.Play();
+            }
+            
+>>>>>>> e069ea7d583280e84d72f8567210611914636200
         }
         else
         {
@@ -108,6 +181,11 @@ public class PlayerScript : MonoBehaviour
             isJump = true;
             jumpVelocity.y = Mathf.Sqrt(jumpSpeed * -2 * gravity);
             timer = 1.5F;
+<<<<<<< HEAD
+=======
+            var rand = UnityEngine.Random.Range(0, jumpSounds.Length - 1);
+            jumpSounds[rand].Play();
+>>>>>>> e069ea7d583280e84d72f8567210611914636200
         }
 
         if (Input.GetKeyDown(KeyCode.Space) && isJump && direction.magnitude >= 1F)
@@ -134,6 +212,11 @@ public class PlayerScript : MonoBehaviour
 
     public void HealthDamage(float damage)
     {
+<<<<<<< HEAD
+=======
+        var rand = UnityEngine.Random.Range(0, takeDamageSounds.Length - 1);
+        takeDamageSounds[rand].Play();
+>>>>>>> e069ea7d583280e84d72f8567210611914636200
         print("HIT");
     }
 }
