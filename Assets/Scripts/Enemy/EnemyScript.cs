@@ -28,6 +28,12 @@ public class EnemyScript : MonoBehaviour
     bool isPlayerInRange;
     bool isPlayerInAttackRange;
 
+<<<<<<< HEAD
+=======
+    [SerializeField]
+    Sound[] attackSounds;
+
+>>>>>>> e069ea7d583280e84d72f8567210611914636200
 
     // Start is called before the first frame update
     void Start()
@@ -35,6 +41,17 @@ public class EnemyScript : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
         player = GameObject.Find("Player").transform;
+<<<<<<< HEAD
+=======
+
+        for (int i = 0; i < attackSounds.Length; i++)
+        {
+            GameObject _go = new GameObject("Sound_" + i + "_" + attackSounds[i].soundName);
+            _go.transform.SetParent(this.transform);
+            attackSounds[i].SetSource(_go.AddComponent<AudioSource>());
+
+        }
+>>>>>>> e069ea7d583280e84d72f8567210611914636200
     }
 
     // Update is called once per frame
@@ -98,6 +115,12 @@ public class EnemyScript : MonoBehaviour
         Vector3 direction = (player.position - transform.position).normalized;
         var rotateToTarget = Quaternion.LookRotation(new Vector3(direction.x, 0F, direction.z));
         transform.rotation = Quaternion.Slerp(transform.rotation, rotateToTarget, rotateSpeed * Time.deltaTime);
+<<<<<<< HEAD
+=======
+
+        var rand = UnityEngine.Random.Range(0, attackSounds.Length - 1);
+        attackSounds[rand].Play();
+>>>>>>> e069ea7d583280e84d72f8567210611914636200
     }
 
     private void SearchWalkPoint()
