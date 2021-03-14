@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Assets.Scripts;
 
 [DisallowMultipleComponent]
 public class PlayerScript : MonoBehaviour
@@ -29,6 +30,15 @@ public class PlayerScript : MonoBehaviour
     private float smoothVelo;
     private float timer = 0F;
 
+    private Sounds soundScript = new Sounds();
+    [SerializeField]
+    Sounds[] jumpSounds;
+
+    [SerializeField]
+    Sounds[] takeDamageSounds;
+    [SerializeField]
+    AudioSource walk;
+
 
     void Start()
     {
@@ -37,6 +47,9 @@ public class PlayerScript : MonoBehaviour
 
         isSprinting = false;
         Cursor.lockState = CursorLockMode.Locked;
+
+        soundScript.LoadSounds(jumpSounds);
+        soundScript.LoadSounds(takeDamageSounds);
     }
 
     // Update is called once per frame
@@ -72,18 +85,22 @@ public class PlayerScript : MonoBehaviour
         if (Input.GetKey(KeyCode.W))
         {
             animator.SetFloat("Running", direction.magnitude);
+            walk.Play();
         }
         else if (Input.GetKey(KeyCode.A))
         {
             animator.SetFloat("Running", direction.magnitude);
+            walk.Play();
         }
         else if (Input.GetKey(KeyCode.D))
         {
             animator.SetFloat("Running", direction.magnitude);
+            walk.Play();
         }
         else if (Input.GetKey(KeyCode.S))
         {
             animator.SetFloat("Running", direction.magnitude);
+            walk.Play();
         }
         else
         {
@@ -108,6 +125,7 @@ public class PlayerScript : MonoBehaviour
             isJump = true;
             jumpVelocity.y = Mathf.Sqrt(jumpSpeed * -2 * gravity);
             timer = 1.5F;
+            soundScript.PlayRandomSound(jumpSounds);
         }
 
         if (Input.GetKeyDown(KeyCode.Space) && isJump && direction.magnitude >= 1F)
@@ -135,5 +153,6 @@ public class PlayerScript : MonoBehaviour
     public void HealthDamage(float damage)
     {
         print("HIT");
+        soundScript.PlayRandomSound(takeDamageSounds);
     }
 }
