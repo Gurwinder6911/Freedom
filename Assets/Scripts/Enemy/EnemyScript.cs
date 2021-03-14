@@ -1,3 +1,4 @@
+using Assets.Scripts;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -28,10 +29,11 @@ public class EnemyScript : MonoBehaviour
     bool isPlayerInRange;
     bool isPlayerInAttackRange;
 
+    private Sounds soundScript = new Sounds();
     [SerializeField]
-    Sound[] attackSounds;
+    Sounds[] attackSounds;
 
-    //f
+    //
     // Start is called before the first frame update
     void Start()
     {
@@ -39,13 +41,8 @@ public class EnemyScript : MonoBehaviour
         animator = GetComponent<Animator>();
         player = GameObject.Find("Player").transform;
 
-        for (int i = 0; i < attackSounds.Length; i++)
-        {
-            GameObject _go = new GameObject("Sound_" + i + "_" + attackSounds[i].soundName);
-            _go.transform.SetParent(this.transform);
-            attackSounds[i].SetSource(_go.AddComponent<AudioSource>());
+        soundScript.LoadSounds(attackSounds);
 
-        }
 
     }
 
@@ -111,8 +108,7 @@ public class EnemyScript : MonoBehaviour
         var rotateToTarget = Quaternion.LookRotation(new Vector3(direction.x, 0F, direction.z));
         transform.rotation = Quaternion.Slerp(transform.rotation, rotateToTarget, rotateSpeed * Time.deltaTime);
 
-        var rand = UnityEngine.Random.Range(0, attackSounds.Length - 1);
-        attackSounds[rand].Play();
+        soundScript.PlayRandomSound(attackSounds);
 
     }
 
@@ -128,4 +124,6 @@ public class EnemyScript : MonoBehaviour
             isWalkPointSet = true;
         }
     }
+
+    
 }
