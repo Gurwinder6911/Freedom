@@ -6,6 +6,7 @@ public class HeartPickup : MonoBehaviour
 {
     InventorySystem inventory;
 
+
     private void Start()
     {
         inventory = GameObject.Find("Canvas").GetComponent<InventorySystem>();

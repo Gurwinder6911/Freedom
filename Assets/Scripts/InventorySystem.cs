@@ -9,13 +9,14 @@ public class InventorySystem : MonoBehaviour
 
     [SerializeField] Text counter;
     [SerializeField] GameObject inventory;
+    [SerializeField] PlayerScript player;
 
     private int count;
 
     // Start is called before the first frame update
     void Start()
     {
-        items = new List<string>();
+        items = PlayerData.Inv;
         count = 0;
     }
 
@@ -52,6 +53,10 @@ public class InventorySystem : MonoBehaviour
 
     public void UseHealth()
     {
-        items.Remove("H");
+        if (items.Count > 0)
+        {
+            items.Remove("H");
+            player.UseHealth(3F); 
+        }
     }
 }

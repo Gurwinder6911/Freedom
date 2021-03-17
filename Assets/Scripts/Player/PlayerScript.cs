@@ -7,7 +7,7 @@ using Assets.Scripts;
 [DisallowMultipleComponent]
 public class PlayerScript : MonoBehaviour
 {
-    [SerializeField] float health;
+    [SerializeField] float health = 10F;
     [SerializeField] float speed = 1.5F;
     [SerializeField] float extraSpeed = 2F;
     [SerializeField] float jumpSpeed = 2F;
@@ -17,6 +17,7 @@ public class PlayerScript : MonoBehaviour
     [SerializeField] Transform camera;
     [SerializeField] Transform groundCheck;
     [SerializeField] LayerMask groundMask;
+    [SerializeField] HealthBar healthBar;
 
     private CharacterController character;
     private Vector3 jumpVelocity;
@@ -85,26 +86,30 @@ public class PlayerScript : MonoBehaviour
         if (Input.GetKey(KeyCode.W))
         {
             animator.SetFloat("Running", direction.magnitude);
-            walk.Play();
         }
         else if (Input.GetKey(KeyCode.A))
         {
             animator.SetFloat("Running", direction.magnitude);
-            walk.Play();
         }
         else if (Input.GetKey(KeyCode.D))
         {
             animator.SetFloat("Running", direction.magnitude);
-            walk.Play();
         }
         else if (Input.GetKey(KeyCode.S))
         {
             animator.SetFloat("Running", direction.magnitude);
-            walk.Play();
         }
         else
         {
             animator.SetFloat("Running", direction.magnitude);
+        }
+    }
+
+    public void RunningSound()
+    {
+        if (!walk.isPlaying)
+        {
+            walk.Play();
         }
     }
 
@@ -139,6 +144,11 @@ public class PlayerScript : MonoBehaviour
             isJump = false;
         }
 
+        if (!isOnGround)
+        {
+            walk.Stop();
+        }
+
         timer -= Time.deltaTime;
     }
 
@@ -152,7 +162,25 @@ public class PlayerScript : MonoBehaviour
 
     public void HealthDamage(float damage)
     {
-        print("HIT");
+        health -= damage;
+
+        healthBar.SetHealth(health);
+
+        if (health <= 0)
+        {
+            health = 0;
+        }
         soundScript.PlayRandomSound(takeDamageSounds);
+    }
+
+    public void UseHealth(float healthIncrease)
+    {
+        health += healthIncrease;
+        healthBar.SetHealth(health);
+
+        if (health >= 10)
+        {
+            health = 10;
+        }
     }
 }
