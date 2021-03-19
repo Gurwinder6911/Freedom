@@ -9,19 +9,29 @@ public class MovableObstacle : MonoBehaviour
     Vector3 movementVector;
 
     [SerializeField]
+    LayerMask playerMask;
+
+    [SerializeField]
+    Transform playerCheck;
+
+    [SerializeField]
     [Range(0, 1)]
     float movementPerc;
 
     [SerializeField]
     float period = 2F;
 
-    Vector3 startingPos;
+    private Vector3 startingPos;
+    private PlayerScript player;
+
+    private bool isHitPlayer;
 
 
     // Start is called before the first frame update
     void Start()
     {
         startingPos = transform.position;
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>();
     }
 
     // Update is called once per frame
@@ -37,6 +47,16 @@ public class MovableObstacle : MonoBehaviour
 
             Vector3 offset = movementVector * movementPerc;
             transform.position = startingPos + offset;
+        }
+    }
+
+    void CheckingPlayer()
+    {
+        isHitPlayer = Physics.CheckSphere(playerCheck.position, 1.5F, playerMask);
+
+        if (isHitPlayer)
+        {
+            player.HealthDamage(10F);
         }
     }
 }

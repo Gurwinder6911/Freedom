@@ -7,14 +7,16 @@ using Assets.Scripts;
 [DisallowMultipleComponent]
 public class PlayerScript : MonoBehaviour
 {
-    [SerializeField] float health = 10F;
+    public float trackHealth;
+
+    [SerializeField] float health;
     [SerializeField] float speed = 1.5F;
     [SerializeField] float extraSpeed = 2F;
     [SerializeField] float jumpSpeed = 2F;
     [SerializeField] float gravity = 7F;
     [SerializeField] float groundDistance = 0.5F;
 
-    [SerializeField] Transform camera;
+    [SerializeField] GameObject camera;
     [SerializeField] Transform groundCheck;
     [SerializeField] LayerMask groundMask;
     [SerializeField] HealthBar healthBar;
@@ -27,6 +29,7 @@ public class PlayerScript : MonoBehaviour
     private bool isOnGround;
     private bool isSprinting;
     private bool isJump;
+    private bool isDead;
 
     private float smoothVelo;
     private float timer = 0F;
@@ -43,10 +46,13 @@ public class PlayerScript : MonoBehaviour
 
     void Start()
     {
+        health = PlayerData.Health;
+
         character = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
 
         isSprinting = false;
+        isDead = false;
         Cursor.lockState = CursorLockMode.Locked;
 
         soundScript.LoadSounds(jumpSounds);
@@ -56,10 +62,15 @@ public class PlayerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        CheckingOnGround();
-        PlayerMovement();
-        RunningAnimation();
-        PlayerJump();
+        trackHealth = health;
+
+        if (!isDead)
+        {
+            CheckingOnGround();
+            PlayerMovement();
+            RunningAnimation();
+            PlayerJump(); 
+        }
     }
 
     private void PlayerMovement()
@@ -71,6 +82,7 @@ public class PlayerScript : MonoBehaviour
         if (direction.magnitude >= 0.1F)
         {
             float directAngle;
+
             Rotation(direction, out directAngle);
 
             Vector3 forwardDirection = Quaternion.Euler(0F, directAngle, 0F) * Vector3.forward;
@@ -154,7 +166,7 @@ public class PlayerScript : MonoBehaviour
 
     private void Rotation(Vector3 direction, out float directAngle)
     {
-        directAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + camera.eulerAngles.y; 
+        directAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + camera.transform.eulerAngles.y; 
         float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, directAngle, ref smoothVelo, 0.1F);
 
         transform.rotation = Quaternion.Euler(0F, angle, 0F);
@@ -168,7 +180,14 @@ public class PlayerScript : MonoBehaviour
 
         if (health <= 0)
         {
+            isDead = true;
             health = 0;
+
+            healthBar.SetHealth(health);
+            camera.transform.DetachChildren();
+            camera.SetActive(false);
+
+            Destroy(this.gameObject);
         }
         soundScript.PlayRandomSound(takeDamageSounds);
     }

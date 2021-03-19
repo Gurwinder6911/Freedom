@@ -42,8 +42,6 @@ public class EnemyScript : MonoBehaviour
         player = GameObject.Find("Player").transform;
 
         soundScript.LoadSounds(attackSounds);
-
-
     }
 
     // Update is called once per frame
