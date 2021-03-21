@@ -7,9 +7,6 @@ using Assets.Scripts;
 [DisallowMultipleComponent]
 public class PlayerScript : MonoBehaviour
 {
-    public float trackHealth;
-    public float health;
-
     [SerializeField] float speed = 1.5F;
     [SerializeField] float extraSpeed = 2F;
     [SerializeField] float jumpSpeed = 2F;
@@ -46,7 +43,7 @@ public class PlayerScript : MonoBehaviour
 
     void Start()
     {
-        health = PlayerData.Health;
+        healthBar.SetHealth(PlayerData.Health);
 
         character = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
@@ -62,8 +59,6 @@ public class PlayerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        trackHealth = health;
-
         if (!isDead)
         {
             CheckingOnGround();
@@ -174,16 +169,16 @@ public class PlayerScript : MonoBehaviour
 
     public void HealthDamage(float damage)
     {
-        health -= damage;
+        PlayerData.Health -= damage;
 
-        healthBar.SetHealth(health);
+        healthBar.SetHealth(PlayerData.Health);
 
-        if (health <= 0)
+        if (PlayerData.Health <= 0F)
         {
             isDead = true;
-            health = 0;
+            PlayerData.Health = 0F;
 
-            healthBar.SetHealth(health);
+            healthBar.SetHealth(PlayerData.Health);
             camera.transform.DetachChildren();
             camera.SetActive(false);
 
@@ -194,12 +189,12 @@ public class PlayerScript : MonoBehaviour
 
     public void UseHealth(float healthIncrease)
     {
-        health += healthIncrease;
-        healthBar.SetHealth(health);
+        PlayerData.Health += healthIncrease;
+        healthBar.SetHealth(PlayerData.Health);
 
-        if (health >= 10)
+        if (PlayerData.Health >= 10F)
         {
-            health = 10;
+            PlayerData.Health = 10F;
         }
     }
 }
