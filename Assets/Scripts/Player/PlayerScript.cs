@@ -8,8 +8,8 @@ using Assets.Scripts;
 public class PlayerScript : MonoBehaviour
 {
     public float trackHealth;
+    public float health;
 
-    [SerializeField] float health;
     [SerializeField] float speed = 1.5F;
     [SerializeField] float extraSpeed = 2F;
     [SerializeField] float jumpSpeed = 2F;
