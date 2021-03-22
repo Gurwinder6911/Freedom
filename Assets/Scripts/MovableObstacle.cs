@@ -21,7 +21,15 @@ public class MovableObstacle : MonoBehaviour
     [SerializeField]
     float period = 2F;
 
+<<<<<<< HEAD
     private Vector3 startingPos;
+=======
+    [SerializeField]
+    float playerDistance;
+
+    private Vector3 startingPos;
+    private Vector3 offset;
+>>>>>>> b7d611a51f21907299fb966ab890efe9c48a7fbd
     private PlayerScript player;
 
     private bool isHitPlayer;
@@ -37,6 +45,11 @@ public class MovableObstacle : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+<<<<<<< HEAD
+=======
+        CheckingPlayer();
+
+>>>>>>> b7d611a51f21907299fb966ab890efe9c48a7fbd
         if (period != 0)
         {
             float cycles = Time.time / period;
@@ -45,16 +58,26 @@ public class MovableObstacle : MonoBehaviour
 
             movementPerc = sineWave / 2F + 0.5F;
 
+<<<<<<< HEAD
             Vector3 offset = movementVector * movementPerc;
+=======
+            offset = movementVector * movementPerc;
+>>>>>>> b7d611a51f21907299fb966ab890efe9c48a7fbd
             transform.position = startingPos + offset;
         }
     }
 
     void CheckingPlayer()
     {
+<<<<<<< HEAD
         isHitPlayer = Physics.CheckSphere(playerCheck.position, 1.5F, playerMask);
 
         if (isHitPlayer)
+=======
+        isHitPlayer = Physics.CheckSphere(playerCheck.position, playerDistance, playerMask);
+
+        if (isHitPlayer && offset.magnitude > 1.5F)
+>>>>>>> b7d611a51f21907299fb966ab890efe9c48a7fbd
         {
             player.HealthDamage(10F);
         }

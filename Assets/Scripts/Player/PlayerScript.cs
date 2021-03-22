@@ -3,14 +3,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Assets.Scripts;
+<<<<<<< HEAD
 using UnityEngine.SceneManagement;
+=======
+>>>>>>> b7d611a51f21907299fb966ab890efe9c48a7fbd
 
 [DisallowMultipleComponent]
 public class PlayerScript : MonoBehaviour
 {
+<<<<<<< HEAD
     public float trackHealth;
 
     [SerializeField] float health;
+=======
+>>>>>>> b7d611a51f21907299fb966ab890efe9c48a7fbd
     [SerializeField] float speed = 1.5F;
     [SerializeField] float extraSpeed = 2F;
     [SerializeField] float jumpSpeed = 2F;
@@ -47,7 +53,11 @@ public class PlayerScript : MonoBehaviour
 
     void Start()
     {
+<<<<<<< HEAD
         health = PlayerData.Health;
+=======
+        healthBar.SetHealth(PlayerData.Health);
+>>>>>>> b7d611a51f21907299fb966ab890efe9c48a7fbd
 
         character = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
@@ -63,8 +73,11 @@ public class PlayerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+<<<<<<< HEAD
         trackHealth = health;
 
+=======
+>>>>>>> b7d611a51f21907299fb966ab890efe9c48a7fbd
         if (!isDead)
         {
             CheckingOnGround();
@@ -175,6 +188,7 @@ public class PlayerScript : MonoBehaviour
 
     public void HealthDamage(float damage)
     {
+<<<<<<< HEAD
         health -= damage;
 
         healthBar.SetHealth(health);
@@ -185,23 +199,47 @@ public class PlayerScript : MonoBehaviour
             health = 0;
 
             healthBar.SetHealth(health);
+=======
+        PlayerData.Health -= damage;
+
+        healthBar.SetHealth(PlayerData.Health);
+
+        if (PlayerData.Health <= 0F)
+        {
+            isDead = true;
+            PlayerData.Health = 0F;
+
+            healthBar.SetHealth(PlayerData.Health);
+>>>>>>> b7d611a51f21907299fb966ab890efe9c48a7fbd
             camera.transform.DetachChildren();
             camera.SetActive(false);
 
             Destroy(this.gameObject);
+<<<<<<< HEAD
             SceneManager.LoadScene("Game Over");
+=======
+>>>>>>> b7d611a51f21907299fb966ab890efe9c48a7fbd
         }
         soundScript.PlayRandomSound(takeDamageSounds);
     }
 
     public void UseHealth(float healthIncrease)
     {
+<<<<<<< HEAD
         health += healthIncrease;
         healthBar.SetHealth(health);
 
         if (health >= 10)
         {
             health = 10;
+=======
+        PlayerData.Health += healthIncrease;
+        healthBar.SetHealth(PlayerData.Health);
+
+        if (PlayerData.Health >= 10F)
+        {
+            PlayerData.Health = 10F;
+>>>>>>> b7d611a51f21907299fb966ab890efe9c48a7fbd
         }
     }
 }

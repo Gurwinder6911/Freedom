@@ -53,7 +53,11 @@ public class InventorySystem : MonoBehaviour
 
     public void UseHealth()
     {
+<<<<<<< HEAD
         if (player.trackHealth < 10)
+=======
+        if (PlayerData.Health < 10)
+>>>>>>> b7d611a51f21907299fb966ab890efe9c48a7fbd
         {
             items.Remove("H");
             player.UseHealth(3F); 
