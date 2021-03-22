@@ -9,6 +9,20 @@ public class PauseMenuScript : MonoBehaviour
 
     bool isGamePaused;
 
+    [Header("Player Settings")]
+    public PlayerScript player;
+
+    HealthBar healthBar;
+
+    [Header("Scene Data")]
+    public SceneDataSO sceneData;
+
+    void Start()
+    {
+        player = FindObjectOfType<PlayerScript>();
+        healthBar = FindObjectOfType<HealthBar>();
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -39,5 +53,19 @@ public class PauseMenuScript : MonoBehaviour
         pauseMenu.SetActive(true);
         Time.timeScale = 0F;
         isGamePaused = true;
+    }
+
+    public void Save()
+    {
+        sceneData.playerPosition = player.transform.position;
+        sceneData.playerRotation = player.transform.rotation;
+        sceneData.playerHealth = PlayerData.Health;
+    }
+
+    public void Load()
+    {
+        player.transform.position = sceneData.playerPosition;
+        player.transform.rotation = sceneData.playerRotation;
+        healthBar.SetHealth(sceneData.playerHealth);
     }
 }
