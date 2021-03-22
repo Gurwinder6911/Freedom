@@ -56,6 +56,19 @@ public class EnemyScript : MonoBehaviour
         if (!isPlayerInRange && !isPlayerInAttackRange)
         {
             Searching();
+
+            if (PlayerData.Health <= 0)
+            {
+                switch (this.gameObject.tag)
+                {
+                    case "Enemy":
+                        animator.SetBool("IsAttack", false);
+                        break;
+                    case "Strong":
+                        animator.SetBool("isShoot", false);
+                        break;
+                }
+            }
         }
 
         if (isPlayerInRange && !isPlayerInAttackRange && !isAttacked)
@@ -91,7 +104,15 @@ public class EnemyScript : MonoBehaviour
 
     private void ChasePlayer()
     {
-        animator.SetBool("IsAttack", false);
+        switch (this.gameObject.tag)
+        {
+            case "Enemy":
+                animator.SetBool("IsAttack", false);
+                break;
+            case "Strong":
+                animator.SetBool("isShoot", false);
+                break;
+        }
 
         agent.stoppingDistance = 1.4F;
         agent.SetDestination(player.position);
@@ -100,7 +121,16 @@ public class EnemyScript : MonoBehaviour
     private void AttackPlayer()
     {
         isAttacked = true;
-        animator.SetBool("IsAttack", true);
+
+        switch (this.gameObject.tag)
+        {
+            case "Enemy":
+                animator.SetBool("IsAttack", true);
+                break;
+            case "Strong":
+                animator.SetBool("isShoot", true);
+                break;
+        }
         
         Vector3 direction = (player.position - transform.position).normalized;
         var rotateToTarget = Quaternion.LookRotation(new Vector3(direction.x, 0F, direction.z));
