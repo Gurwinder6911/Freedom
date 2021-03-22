@@ -5,15 +5,15 @@ m_ProjectFiles:
     m_ContentTrackingEnabled: 1
     m_ModificationDate:
       serializedVersion: 2
-      ticks: 637519679234473581
-    m_Hash: 4007186375
+      ticks: 637519756375967927
+    m_Hash: 1857255145
   m_LockFileStatus:
     m_FilePath: D:/Centennial_College/Semester 04/Web Game Programming/Group Project/Freedom/Packages/packages-lock.json
     m_PathExists: 1
     m_ContentTrackingEnabled: 1
     m_ModificationDate:
       serializedVersion: 2
-      ticks: 637519679395988425
+      ticks: 637519757563924428
     m_Hash: 38571225
 m_EmbeddedPackageManifests:
   m_ManifestsStatus: {}

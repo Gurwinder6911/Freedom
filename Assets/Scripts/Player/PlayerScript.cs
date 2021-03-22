@@ -4,9 +4,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using Assets.Scripts;
 
+using UnityEngine.SceneManagement;
+
+
 [DisallowMultipleComponent]
 public class PlayerScript : MonoBehaviour
 {
+
+    public float trackHealth;
+
+    [SerializeField] float health;
+
+
     [SerializeField] float speed = 1.5F;
     [SerializeField] float extraSpeed = 2F;
     [SerializeField] float jumpSpeed = 2F;
@@ -43,7 +52,11 @@ public class PlayerScript : MonoBehaviour
 
     void Start()
     {
+
+        health = PlayerData.Health;
+
         healthBar.SetHealth(PlayerData.Health);
+
 
         character = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
@@ -59,12 +72,15 @@ public class PlayerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        trackHealth = health;
+
         if (!isDead)
         {
             CheckingOnGround();
             PlayerMovement();
             RunningAnimation();
-            PlayerJump(); 
+            PlayerJump();
         }
     }
 
@@ -161,7 +177,7 @@ public class PlayerScript : MonoBehaviour
 
     private void Rotation(Vector3 direction, out float directAngle)
     {
-        directAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + camera.transform.eulerAngles.y; 
+        directAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + camera.transform.eulerAngles.y;
         float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, directAngle, ref smoothVelo, 0.1F);
 
         transform.rotation = Quaternion.Euler(0F, angle, 0F);
@@ -169,32 +185,57 @@ public class PlayerScript : MonoBehaviour
 
     public void HealthDamage(float damage)
     {
-        PlayerData.Health -= damage;
 
-        healthBar.SetHealth(PlayerData.Health);
+        health -= damage;
 
-        if (PlayerData.Health <= 0F)
+        healthBar.SetHealth(health);
+
+        if (health <= 0)
         {
             isDead = true;
-            PlayerData.Health = 0F;
+            health = 0;
+
+            healthBar.SetHealth(health);
+
+            PlayerData.Health -= damage;
 
             healthBar.SetHealth(PlayerData.Health);
-            camera.transform.DetachChildren();
-            camera.SetActive(false);
 
-            Destroy(this.gameObject);
+            if (PlayerData.Health <= 0F)
+            {
+                isDead = true;
+                PlayerData.Health = 0F;
+
+                healthBar.SetHealth(PlayerData.Health);
+
+                camera.transform.DetachChildren();
+                camera.SetActive(false);
+
+                Destroy(this.gameObject);
+
+                SceneManager.LoadScene("Game Over");
+
+            }
+            soundScript.PlayRandomSound(takeDamageSounds);
         }
-        soundScript.PlayRandomSound(takeDamageSounds);
     }
 
-    public void UseHealth(float healthIncrease)
-    {
-        PlayerData.Health += healthIncrease;
-        healthBar.SetHealth(PlayerData.Health);
-
-        if (PlayerData.Health >= 10F)
+        public void UseHealth(float healthIncrease)
         {
-            PlayerData.Health = 10F;
-        }
-    }
-}
+            health += healthIncrease;
+            healthBar.SetHealth(health);
+
+            if (health >= 10)
+            {
+                health = 10;
+
+                PlayerData.Health += healthIncrease;
+                healthBar.SetHealth(PlayerData.Health);
+
+                if (PlayerData.Health >= 10F)
+                {
+                    PlayerData.Health = 10F;
+
+                }
+            }
+        } } 
