@@ -2,15 +2,14 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Assets.Scripts;
+using UnityEngine.SceneManagement;
 
-<<<<<<< HEAD
-=======
-
-
->>>>>>> e069ea7d583280e84d72f8567210611914636200
 [DisallowMultipleComponent]
 public class PlayerScript : MonoBehaviour
 {
+    public float trackHealth;
+
     [SerializeField] float health;
     [SerializeField] float speed = 1.5F;
     [SerializeField] float extraSpeed = 2F;
@@ -18,9 +17,10 @@ public class PlayerScript : MonoBehaviour
     [SerializeField] float gravity = 7F;
     [SerializeField] float groundDistance = 0.5F;
 
-    [SerializeField] Transform camera;
+    [SerializeField] GameObject camera;
     [SerializeField] Transform groundCheck;
     [SerializeField] LayerMask groundMask;
+    [SerializeField] HealthBar healthBar;
 
     private CharacterController character;
     private Vector3 jumpVelocity;
@@ -30,63 +30,48 @@ public class PlayerScript : MonoBehaviour
     private bool isOnGround;
     private bool isSprinting;
     private bool isJump;
+    private bool isDead;
 
     private float smoothVelo;
     private float timer = 0F;
 
-<<<<<<< HEAD
-=======
-    //Reusing Sound class as defined in BackgroundMusic for playing sounds
+    private Sounds soundScript = new Sounds();
     [SerializeField]
-    Sound[] jumpSounds;
+    Sounds[] jumpSounds;
 
     [SerializeField]
-    Sound[] takeDamageSounds;
+    Sounds[] takeDamageSounds;
+    [SerializeField]
+    AudioSource walk;
 
-    public AudioSource footsteps;
-
->>>>>>> e069ea7d583280e84d72f8567210611914636200
 
     void Start()
     {
+        health = PlayerData.Health;
+
         character = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
 
         isSprinting = false;
+        isDead = false;
         Cursor.lockState = CursorLockMode.Locked;
-<<<<<<< HEAD
+
+        soundScript.LoadSounds(jumpSounds);
+        soundScript.LoadSounds(takeDamageSounds);
     }
 
     // Update is called once per frame
     void Update()
-=======
-
-        for (int i = 0; i < jumpSounds.Length; i++)
-        {
-            GameObject _go = new GameObject("Sound_" + i + "_" + jumpSounds[i].soundName);
-            _go.transform.SetParent(this.transform);
-            jumpSounds[i].SetSource(_go.AddComponent<AudioSource>());
-            
-        }
-
-        for (int i = 0; i < takeDamageSounds.Length; i++)
-        {
-            GameObject _go = new GameObject("Sound_" + i + "_" + jumpSounds[i].soundName);
-            _go.transform.SetParent(this.transform);
-            takeDamageSounds[i].SetSource(_go.AddComponent<AudioSource>());
-
-        }
-
-    }
-
-    // Update is called once per frame
-    void FixedUpdate()
->>>>>>> e069ea7d583280e84d72f8567210611914636200
     {
-        CheckingOnGround();
-        PlayerMovement();
-        RunningAnimation();
-        PlayerJump();
+        trackHealth = health;
+
+        if (!isDead)
+        {
+            CheckingOnGround();
+            PlayerMovement();
+            RunningAnimation();
+            PlayerJump(); 
+        }
     }
 
     private void PlayerMovement()
@@ -98,6 +83,7 @@ public class PlayerScript : MonoBehaviour
         if (direction.magnitude >= 0.1F)
         {
             float directAngle;
+
             Rotation(direction, out directAngle);
 
             Vector3 forwardDirection = Quaternion.Euler(0F, directAngle, 0F) * Vector3.forward;
@@ -112,55 +98,31 @@ public class PlayerScript : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.W))
         {
-            animator.SetBool("isRunning", true);
-<<<<<<< HEAD
-=======
-            if (footsteps.isPlaying == false)
-            {
-                footsteps.Play();
-            }
-            
->>>>>>> e069ea7d583280e84d72f8567210611914636200
+            animator.SetFloat("Running", direction.magnitude);
         }
         else if (Input.GetKey(KeyCode.A))
         {
-            animator.SetBool("isRunning", true);
-<<<<<<< HEAD
-=======
-            if (footsteps.isPlaying == false)
-            {
-                footsteps.Play();
-            }
-            
->>>>>>> e069ea7d583280e84d72f8567210611914636200
+            animator.SetFloat("Running", direction.magnitude);
         }
         else if (Input.GetKey(KeyCode.D))
         {
-            animator.SetBool("isRunning", true);
-<<<<<<< HEAD
-=======
-            if (footsteps.isPlaying == false)
-            {
-                footsteps.Play();
-            }
-            
->>>>>>> e069ea7d583280e84d72f8567210611914636200
+            animator.SetFloat("Running", direction.magnitude);
         }
         else if (Input.GetKey(KeyCode.S))
         {
-            animator.SetBool("isRunning", true);
-<<<<<<< HEAD
-=======
-            if (footsteps.isPlaying == false)
-            {
-                footsteps.Play();
-            }
-            
->>>>>>> e069ea7d583280e84d72f8567210611914636200
+            animator.SetFloat("Running", direction.magnitude);
         }
         else
         {
-            animator.SetBool("isRunning", false);
+            animator.SetFloat("Running", direction.magnitude);
+        }
+    }
+
+    public void RunningSound()
+    {
+        if (!walk.isPlaying)
+        {
+            walk.Play();
         }
     }
 
@@ -181,11 +143,7 @@ public class PlayerScript : MonoBehaviour
             isJump = true;
             jumpVelocity.y = Mathf.Sqrt(jumpSpeed * -2 * gravity);
             timer = 1.5F;
-<<<<<<< HEAD
-=======
-            var rand = UnityEngine.Random.Range(0, jumpSounds.Length - 1);
-            jumpSounds[rand].Play();
->>>>>>> e069ea7d583280e84d72f8567210611914636200
+            soundScript.PlayRandomSound(jumpSounds);
         }
 
         if (Input.GetKeyDown(KeyCode.Space) && isJump && direction.magnitude >= 1F)
@@ -199,12 +157,17 @@ public class PlayerScript : MonoBehaviour
             isJump = false;
         }
 
+        if (!isOnGround)
+        {
+            walk.Stop();
+        }
+
         timer -= Time.deltaTime;
     }
 
     private void Rotation(Vector3 direction, out float directAngle)
     {
-        directAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + camera.eulerAngles.y; 
+        directAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + camera.transform.eulerAngles.y; 
         float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, directAngle, ref smoothVelo, 0.1F);
 
         transform.rotation = Quaternion.Euler(0F, angle, 0F);
@@ -212,11 +175,33 @@ public class PlayerScript : MonoBehaviour
 
     public void HealthDamage(float damage)
     {
-<<<<<<< HEAD
-=======
-        var rand = UnityEngine.Random.Range(0, takeDamageSounds.Length - 1);
-        takeDamageSounds[rand].Play();
->>>>>>> e069ea7d583280e84d72f8567210611914636200
-        print("HIT");
+        health -= damage;
+
+        healthBar.SetHealth(health);
+
+        if (health <= 0)
+        {
+            isDead = true;
+            health = 0;
+
+            healthBar.SetHealth(health);
+            camera.transform.DetachChildren();
+            camera.SetActive(false);
+
+            Destroy(this.gameObject);
+            SceneManager.LoadScene("Game Over");
+        }
+        soundScript.PlayRandomSound(takeDamageSounds);
+    }
+
+    public void UseHealth(float healthIncrease)
+    {
+        health += healthIncrease;
+        healthBar.SetHealth(health);
+
+        if (health >= 10)
+        {
+            health = 10;
+        }
     }
 }

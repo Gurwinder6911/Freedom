@@ -1,3 +1,4 @@
+using Assets.Scripts;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -28,30 +29,19 @@ public class EnemyScript : MonoBehaviour
     bool isPlayerInRange;
     bool isPlayerInAttackRange;
 
-<<<<<<< HEAD
-=======
+    private Sounds soundScript = new Sounds();
     [SerializeField]
-    Sound[] attackSounds;
+    Sounds[] attackSounds;
 
->>>>>>> e069ea7d583280e84d72f8567210611914636200
-
+    //
     // Start is called before the first frame update
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
         player = GameObject.Find("Player").transform;
-<<<<<<< HEAD
-=======
 
-        for (int i = 0; i < attackSounds.Length; i++)
-        {
-            GameObject _go = new GameObject("Sound_" + i + "_" + attackSounds[i].soundName);
-            _go.transform.SetParent(this.transform);
-            attackSounds[i].SetSource(_go.AddComponent<AudioSource>());
-
-        }
->>>>>>> e069ea7d583280e84d72f8567210611914636200
+        soundScript.LoadSounds(attackSounds);
     }
 
     // Update is called once per frame
@@ -115,12 +105,9 @@ public class EnemyScript : MonoBehaviour
         Vector3 direction = (player.position - transform.position).normalized;
         var rotateToTarget = Quaternion.LookRotation(new Vector3(direction.x, 0F, direction.z));
         transform.rotation = Quaternion.Slerp(transform.rotation, rotateToTarget, rotateSpeed * Time.deltaTime);
-<<<<<<< HEAD
-=======
 
-        var rand = UnityEngine.Random.Range(0, attackSounds.Length - 1);
-        attackSounds[rand].Play();
->>>>>>> e069ea7d583280e84d72f8567210611914636200
+        soundScript.PlayRandomSound(attackSounds);
+
     }
 
     private void SearchWalkPoint()
@@ -135,4 +122,6 @@ public class EnemyScript : MonoBehaviour
             isWalkPointSet = true;
         }
     }
+
+    
 }

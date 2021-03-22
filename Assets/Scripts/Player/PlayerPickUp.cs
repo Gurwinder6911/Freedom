@@ -26,7 +26,10 @@ public class PlayerPickUp : MonoBehaviour
     void Update()
     {
 
-        range = Vector3.Distance(transform.position, player.transform.position);
+        if (player != null)
+        {
+            range = Vector3.Distance(transform.position, player.transform.position); 
+        }
 
         if (range >= 2F)
         {

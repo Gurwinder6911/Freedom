@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyAttackEvent : MonoBehaviour
 {
-    [SerializeField] float damage;
+    float damage = 3;
 
     private PlayerScript player;
     private EnemyScript enemy;
