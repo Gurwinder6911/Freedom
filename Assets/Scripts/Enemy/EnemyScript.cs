@@ -59,15 +59,7 @@ public class EnemyScript : MonoBehaviour
 
             if (PlayerData.Health <= 0)
             {
-                switch (this.gameObject.tag)
-                {
-                    case "Enemy":
-                        animator.SetBool("IsAttack", false);
-                        break;
-                    case "Strong":
-                        animator.SetBool("isShoot", false);
-                        break;
-                }
+                DisableAnimation();
             }
         }
 
@@ -84,6 +76,8 @@ public class EnemyScript : MonoBehaviour
 
     private void Searching()
     {
+        DisableAnimation();
+
         if (!isWalkPointSet)
         {
             SearchWalkPoint();
@@ -104,19 +98,12 @@ public class EnemyScript : MonoBehaviour
 
     private void ChasePlayer()
     {
-        switch (this.gameObject.tag)
-        {
-            case "Enemy":
-                animator.SetBool("IsAttack", false);
-                break;
-            case "Strong":
-                animator.SetBool("isShoot", false);
-                break;
-        }
+        DisableAnimation();
 
         agent.stoppingDistance = 1.4F;
         agent.SetDestination(player.position);
     }
+
 
     private void AttackPlayer()
     {
@@ -153,5 +140,16 @@ public class EnemyScript : MonoBehaviour
         }
     }
 
-    
+    private void DisableAnimation()
+    {
+        switch (this.gameObject.tag)
+        {
+            case "Enemy":
+                animator.SetBool("IsAttack", false);
+                break;
+            case "Strong":
+                animator.SetBool("isShoot", false);
+                break;
+        }
+    }
 }

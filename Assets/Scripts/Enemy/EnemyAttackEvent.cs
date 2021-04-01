@@ -4,17 +4,16 @@ using UnityEngine;
 
 public class EnemyAttackEvent : MonoBehaviour
 {
+    [SerializeField] GameObject power;
+    [SerializeField] Transform firePosition;
+
     float damage = 3;
 
     private PlayerScript player;
-    private EnemyScript enemy;
-    private EnemyScript strong;
 
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>();
-        enemy = GameObject.FindGameObjectWithTag("Enemy").GetComponent<EnemyScript>();
-        strong = GameObject.FindGameObjectWithTag("Strong").GetComponent<EnemyScript>();
     }
 
     // Update is called once per frame
@@ -22,25 +21,25 @@ public class EnemyAttackEvent : MonoBehaviour
     {
         if (player != null)
         {
-            if (enemy.inSight)
+            if (GameObject.FindGameObjectWithTag("Enemy").GetComponent<EnemyScript>().inSight)
             {
                 player.HealthDamage(damage);
             }
         }
 
-        enemy.isAttacked = false;
+        GameObject.FindGameObjectWithTag("Enemy").GetComponent<EnemyScript>().isAttacked = false;
     }
 
     public void ShootEvent()
     {
         if (player != null)
         {
-            if (strong.inSight)
+            if (GameObject.FindGameObjectWithTag("Strong").GetComponent<EnemyScript>().inSight)
             {
-
+                Instantiate(power, firePosition.position, Quaternion.identity);
             }
         }
 
-        strong.isAttacked = false;
+        GameObject.FindGameObjectWithTag("Strong").GetComponent<EnemyScript>().isAttacked = false;
     }
 }
