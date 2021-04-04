@@ -8,11 +8,13 @@ public class EnemyAttackEvent : MonoBehaviour
 
     private PlayerScript player;
     private EnemyScript enemy;
+    private EnemyScript strong;
 
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>();
         enemy = GameObject.FindGameObjectWithTag("Enemy").GetComponent<EnemyScript>();
+        strong = GameObject.FindGameObjectWithTag("Strong").GetComponent<EnemyScript>();
     }
 
     // Update is called once per frame
@@ -27,5 +29,18 @@ public class EnemyAttackEvent : MonoBehaviour
         }
 
         enemy.isAttacked = false;
+    }
+
+    public void ShootEvent()
+    {
+        if (player != null)
+        {
+            if (strong.inSight)
+            {
+
+            }
+        }
+
+        strong.isAttacked = false;
     }
 }
