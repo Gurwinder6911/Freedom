@@ -19,6 +19,9 @@ public class PauseMenuScript : MonoBehaviour
 
     void Start()
     {
+        var sceneDataJsonString =
+        PlayerPrefs.GetString("playerData");
+        JsonUtility.FromJsonOverwrite(sceneDataJsonString, sceneData);
         player = FindObjectOfType<PlayerScript>();
         healthBar = FindObjectOfType<HealthBar>();
     }
@@ -60,12 +63,45 @@ public class PauseMenuScript : MonoBehaviour
         sceneData.playerPosition = player.transform.position;
         sceneData.playerRotation = player.transform.rotation;
         sceneData.playerHealth = PlayerData.Health;
+
+        SavetoPlayerPrefs();
     }
 
     public void Load()
     {
+        LoadFromPlayerPrefs();
+
         player.transform.position = sceneData.playerPosition;
         player.transform.rotation = sceneData.playerRotation;
         healthBar.SetHealth(sceneData.playerHealth);
+    }
+
+    public void SavetoPlayerPrefs()
+    {
+        PlayerPrefs.SetFloat("playerTransformX", sceneData.playerPosition.x);
+        PlayerPrefs.SetFloat("playerTransformY", sceneData.playerPosition.y);
+        PlayerPrefs.SetFloat("playerTransformZ", sceneData.playerPosition.z);
+
+        PlayerPrefs.SetFloat("playerRotationX", sceneData.playerRotation.x);
+        PlayerPrefs.SetFloat("playerRotationY", sceneData.playerRotation.y);
+        PlayerPrefs.SetFloat("playerRotationZ", sceneData.playerRotation.z);
+        PlayerPrefs.SetFloat("playerRotationW", sceneData.playerRotation.w);
+
+        PlayerPrefs.SetFloat("playerHealth", sceneData.playerHealth);
+    }
+
+    public void LoadFromPlayerPrefs()
+    {
+        sceneData.playerPosition.x = PlayerPrefs.GetFloat("playerTransformX");
+        sceneData.playerPosition.y = PlayerPrefs.GetFloat("playerTransformY");
+        sceneData.playerPosition.z = PlayerPrefs.GetFloat("playerTransformZ");
+
+        sceneData.playerRotation.x = PlayerPrefs.GetFloat("playerRotationX");
+        sceneData.playerRotation.y = PlayerPrefs.GetFloat("playerRotationY");
+        sceneData.playerRotation.z = PlayerPrefs.GetFloat("playerRotationZ");
+        sceneData.playerRotation.w = PlayerPrefs.GetFloat("playerRotationW");
+
+        sceneData.playerHealth = PlayerPrefs.GetFloat("playerHealth");
+
     }
 }
