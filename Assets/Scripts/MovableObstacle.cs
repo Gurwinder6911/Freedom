@@ -27,9 +27,7 @@ public class MovableObstacle : MonoBehaviour
     [SerializeField]
     float playerDistance;
 
-
     private Vector3 offset;
-
     private PlayerScript player;
 
     private bool isHitPlayer;
@@ -45,9 +43,7 @@ public class MovableObstacle : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
         CheckingPlayer();
-
 
         if (period != 0)
         {
@@ -57,25 +53,16 @@ public class MovableObstacle : MonoBehaviour
 
             movementPerc = sineWave / 2F + 0.5F;
 
-            Vector3 offset = movementVector * movementPerc;
-
             offset = movementVector * movementPerc;
-
             transform.position = startingPos + offset;
         }
     }
 
     void CheckingPlayer()
     {
-
-        isHitPlayer = Physics.CheckSphere(playerCheck.position, 1.5F, playerMask);
-
-        if (isHitPlayer)
-
         isHitPlayer = Physics.CheckSphere(playerCheck.position, playerDistance, playerMask);
 
         if (isHitPlayer && offset.magnitude > 1.5F)
-
         {
             player.HealthDamage(10F);
         }

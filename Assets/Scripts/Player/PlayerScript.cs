@@ -3,9 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Assets.Scripts;
-
 using UnityEngine.SceneManagement;
-
 
 [DisallowMultipleComponent]
 public class PlayerScript : MonoBehaviour
@@ -20,6 +18,7 @@ public class PlayerScript : MonoBehaviour
     [SerializeField] Transform groundCheck;
     [SerializeField] LayerMask groundMask;
     [SerializeField] HealthBar healthBar;
+    [SerializeField] Joystick joystick;
 
     private CharacterController character;
     private Vector3 jumpVelocity;
@@ -48,13 +47,12 @@ public class PlayerScript : MonoBehaviour
     {
         healthBar.SetHealth(PlayerData.Health);
 
-
         character = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
 
         isSprinting = false;
         isDead = false;
-        Cursor.lockState = CursorLockMode.Locked;
+        //Cursor.lockState = CursorLockMode.Locked;
 
         soundScript.LoadSounds(jumpSounds);
         soundScript.LoadSounds(takeDamageSounds);
@@ -68,14 +66,14 @@ public class PlayerScript : MonoBehaviour
             CheckingOnGround();
             PlayerMovement();
             RunningAnimation();
-            PlayerJump();
+            //PlayerJump();
         }
     }
 
     private void PlayerMovement()
     {
-        float horizontal = Input.GetAxisRaw("Horizontal");
-        float vertical = Input.GetAxisRaw("Vertical");
+        float horizontal = joystick.Horizontal;
+        float vertical = joystick.Vertical;
         direction = new Vector3(horizontal, 0F, vertical).normalized;
 
         if (direction.magnitude >= 0.1F)
@@ -134,9 +132,9 @@ public class PlayerScript : MonoBehaviour
         }
     }
 
-    private void PlayerJump()
+    public void PlayerJump()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && isOnGround && timer <= 0F && direction.magnitude >= 1F)
+        if (!isJump && isOnGround && timer <= 0F && direction.magnitude >= 1F)
         {
             isJump = true;
             jumpVelocity.y = Mathf.Sqrt(jumpSpeed * -2 * gravity);
@@ -144,7 +142,7 @@ public class PlayerScript : MonoBehaviour
             soundScript.PlayRandomSound(jumpSounds);
         }
 
-        if (Input.GetKeyDown(KeyCode.Space) && isJump && direction.magnitude >= 1F)
+        if (isJump && direction.magnitude >= 1F)
         {
             animator.SetBool("isJump", true);
         }
@@ -157,6 +155,7 @@ public class PlayerScript : MonoBehaviour
 
         if (!isOnGround)
         {
+            isJump = false;
             walk.Stop();
         }
 
@@ -177,23 +176,17 @@ public class PlayerScript : MonoBehaviour
 
         healthBar.SetHealth(PlayerData.Health);
 
-        PlayerData.Health -= damage;
-
-        healthBar.SetHealth(PlayerData.Health);
         if (PlayerData.Health <= 0F)
         {
             isDead = true;
             PlayerData.Health = 0F;
 
             healthBar.SetHealth(PlayerData.Health);
-
             camera.transform.DetachChildren();
             camera.SetActive(false);
 
             Destroy(this.gameObject);
-
             SceneManager.LoadScene("Game Over");
-
         }
         soundScript.PlayRandomSound(takeDamageSounds);
 
@@ -207,7 +200,6 @@ public class PlayerScript : MonoBehaviour
         if (PlayerData.Health >= 10F)
         {
             PlayerData.Health = 10F;
-
         }
     }
 }

@@ -10,40 +10,37 @@ public class InventorySystem : MonoBehaviour
     [SerializeField] Text counter;
     [SerializeField] GameObject inventory;
     [SerializeField] PlayerScript player;
+    [SerializeField] Button openInven;
+    [SerializeField] Button closeInven;
 
-    private int count;
 
     // Start is called before the first frame update
     void Start()
     {
         items = PlayerData.Inv;
-        count = 0;
     }
 
     // Update is called once per frame
     void Update()
     {
         ShowItems();
-        OpenInventory();
+        //OpenInventory();
     }
 
-    private void OpenInventory()
+    public void OpenInventory()
     {
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            inventory.SetActive(true);
-            Cursor.lockState = CursorLockMode.Confined;
+        inventory.SetActive(true);
+        //Cursor.lockState = CursorLockMode.Confined;
+        openInven.gameObject.SetActive(false);
+        closeInven.gameObject.SetActive(true);
+    }
 
-            ++count;
-        }
-        
-        if (Input.GetKeyDown(KeyCode.E) && count == 2)
-        {
-            Cursor.lockState = CursorLockMode.Locked;
-            inventory.SetActive(false);
-
-            count = 0;
-        }
+    public void CloseInventory()
+    {
+        //Cursor.lockState = CursorLockMode.Locked;
+        inventory.SetActive(false);
+        openInven.gameObject.SetActive(true);
+        closeInven.gameObject.SetActive(false);
     }
 
     private void ShowItems()
