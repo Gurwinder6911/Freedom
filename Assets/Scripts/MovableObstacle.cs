@@ -21,10 +21,12 @@ public class MovableObstacle : MonoBehaviour
     [SerializeField]
     float period = 2F;
 
+
     private Vector3 startingPos;
 
     [SerializeField]
     float playerDistance;
+
 
     private Vector3 offset;
 
@@ -46,6 +48,7 @@ public class MovableObstacle : MonoBehaviour
 
         CheckingPlayer();
 
+
         if (period != 0)
         {
             float cycles = Time.time / period;
@@ -53,6 +56,8 @@ public class MovableObstacle : MonoBehaviour
             float sineWave = Mathf.Sin(cycles * tau);
 
             movementPerc = sineWave / 2F + 0.5F;
+
+            Vector3 offset = movementVector * movementPerc;
 
             offset = movementVector * movementPerc;
 
@@ -62,9 +67,15 @@ public class MovableObstacle : MonoBehaviour
 
     void CheckingPlayer()
     {
+
+        isHitPlayer = Physics.CheckSphere(playerCheck.position, 1.5F, playerMask);
+
+        if (isHitPlayer)
+
         isHitPlayer = Physics.CheckSphere(playerCheck.position, playerDistance, playerMask);
 
         if (isHitPlayer && offset.magnitude > 1.5F)
+
         {
             player.HealthDamage(10F);
         }
