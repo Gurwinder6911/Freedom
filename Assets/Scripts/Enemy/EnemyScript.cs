@@ -90,7 +90,11 @@ public class EnemyScript : MonoBehaviour
         }
         else
         {
-            agent.stoppingDistance = 0F;
+            if (this.gameObject.tag != "Strong")
+            {
+                agent.stoppingDistance = 0F; 
+            }
+
             agent.SetDestination(walkPoint);
         }
 
@@ -114,7 +118,11 @@ public class EnemyScript : MonoBehaviour
                 break;
         }
 
-        agent.stoppingDistance = 1.4F;
+        if (this.gameObject.tag != "Strong")
+        {
+            agent.stoppingDistance = 1.4F; 
+        }
+
         agent.SetDestination(player.position);
     }
 

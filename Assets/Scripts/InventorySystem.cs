@@ -5,8 +5,6 @@ using UnityEngine.UI;
 
 public class InventorySystem : MonoBehaviour
 {
-    public List<string> items;
-
     [SerializeField] Text counter;
     [SerializeField] GameObject inventory;
     [SerializeField] PlayerScript player;
@@ -14,11 +12,6 @@ public class InventorySystem : MonoBehaviour
     [SerializeField] Button closeInven;
 
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        items = PlayerData.Inv;
-    }
 
     // Update is called once per frame
     void Update()
@@ -45,14 +38,14 @@ public class InventorySystem : MonoBehaviour
 
     private void ShowItems()
     {
-        counter.text = items.Count.ToString();
+        counter.text = PlayerData.Inv.Count.ToString();
     }
 
     public void UseHealth()
     {
-        if (PlayerData.Health < 10)
+        if (PlayerData.Health < 10 && PlayerData.Inv.Count > 0)
         {
-            items.Remove("H");
+            PlayerData.Inv.Remove("H");
             player.UseHealth(3F); 
         }
     }
