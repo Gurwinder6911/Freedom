@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerPickUp : MonoBehaviour
 {
@@ -8,6 +9,7 @@ public class PlayerPickUp : MonoBehaviour
     [SerializeField] Transform posPickup;
     [SerializeField] LayerMask wallLayer;
 
+    public static bool isDrop;
 
     private Vector3 mousePosition;
     private Rigidbody rigidbody;
@@ -15,6 +17,7 @@ public class PlayerPickUp : MonoBehaviour
     private float range;
 
     private bool isEquip;
+    private bool isHolding;
 
     void Start()
     {
@@ -25,7 +28,6 @@ public class PlayerPickUp : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
         if (player != null)
         {
             range = Vector3.Distance(transform.position, player.transform.position); 
@@ -49,19 +51,23 @@ public class PlayerPickUp : MonoBehaviour
         }
     }
 
-    void OnMouseDown()
+    public void PickUpFunc()
     {
-        var rayCast = Camera.main.ScreenPointToRay(mousePosition);
-
-        if (range <= 2F && Physics.Raycast(rayCast))
+        if (isHolding)
+        {
+            DropFunc();
+        }
+        else
         {
             PickUp();
         }
     }
 
-    void OnMouseUp()
+    public void DropFunc()
     {
         isEquip = false;
+        isHolding = false;
+        isDrop = isHolding;
     }
 
     private void PickUp()
@@ -72,6 +78,8 @@ public class PlayerPickUp : MonoBehaviour
 
         rigidbody.useGravity = false;
         rigidbody.detectCollisions = true;
+        isHolding = true;
+        isDrop = isHolding;
     }
 
     private void DropObject()

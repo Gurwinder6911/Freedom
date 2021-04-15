@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Assets.Scripts;
 using UnityEngine.SceneManagement;
+using Cinemachine;
 
 [DisallowMultipleComponent]
 public class PlayerScript : MonoBehaviour
@@ -26,8 +27,6 @@ public class PlayerScript : MonoBehaviour
     private Animator animator;
 
     private bool isOnGround;
-    private bool isSprinting;
-    private bool isJump;
     private bool isDead;
 
     private float smoothVelo;
@@ -42,15 +41,19 @@ public class PlayerScript : MonoBehaviour
     [SerializeField]
     AudioSource walk;
 
-
     void Start()
     {
+        if (SceneManager.GetActiveScene().buildIndex == 1)
+        {
+            PlayerData.Health = 10F;
+            PlayerData.Inv.Clear();
+        }
+        
         healthBar.SetHealth(PlayerData.Health);
 
         character = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
 
-        isSprinting = false;
         isDead = false;
         //Cursor.lockState = CursorLockMode.Locked;
 
@@ -65,8 +68,7 @@ public class PlayerScript : MonoBehaviour
         {
             CheckingOnGround();
             PlayerMovement();
-            RunningAnimation();
-            //PlayerJump();
+            PlayerJump();
         }
     }
 
@@ -75,6 +77,7 @@ public class PlayerScript : MonoBehaviour
         float horizontal = joystick.Horizontal;
         float vertical = joystick.Vertical;
         direction = new Vector3(horizontal, 0F, vertical).normalized;
+        animator.SetFloat("Running", direction.magnitude);
 
         if (direction.magnitude >= 0.1F)
         {
@@ -88,30 +91,6 @@ public class PlayerScript : MonoBehaviour
 
         jumpVelocity.y += gravity * Time.deltaTime;
         character.Move(jumpVelocity * Time.deltaTime);
-    }
-
-    private void RunningAnimation()
-    {
-        if (Input.GetKey(KeyCode.W))
-        {
-            animator.SetFloat("Running", direction.magnitude);
-        }
-        else if (Input.GetKey(KeyCode.A))
-        {
-            animator.SetFloat("Running", direction.magnitude);
-        }
-        else if (Input.GetKey(KeyCode.D))
-        {
-            animator.SetFloat("Running", direction.magnitude);
-        }
-        else if (Input.GetKey(KeyCode.S))
-        {
-            animator.SetFloat("Running", direction.magnitude);
-        }
-        else
-        {
-            animator.SetFloat("Running", direction.magnitude);
-        }
     }
 
     public void RunningSound()
@@ -134,32 +113,24 @@ public class PlayerScript : MonoBehaviour
 
     public void PlayerJump()
     {
-        if (!isJump && isOnGround && timer <= 0F && direction.magnitude >= 1F)
+        if (Input.GetKeyDown(KeyCode.Space) && isOnGround && timer <= 0F && direction.magnitude >= 1F)
         {
-            isJump = true;
             jumpVelocity.y = Mathf.Sqrt(jumpSpeed * -2 * gravity);
             timer = 1.5F;
             soundScript.PlayRandomSound(jumpSounds);
         }
 
-        if (isJump && direction.magnitude >= 1F)
-        {
-            animator.SetBool("isJump", true);
-        }
-        else
-        {
-            animator.SetBool("isJump", false);
-
-            isJump = false;
-        }
+        animator.SetFloat("Jump", jumpVelocity.y);
 
         if (!isOnGround)
         {
-            isJump = false;
             walk.Stop();
         }
 
-        timer -= Time.deltaTime;
+        if (timer > 0)
+        {
+            timer -= Time.deltaTime; 
+        }
     }
 
     private void Rotation(Vector3 direction, out float directAngle)
@@ -172,24 +143,26 @@ public class PlayerScript : MonoBehaviour
 
     public void HealthDamage(float damage)
     {
-        PlayerData.Health -= damage;
-
-        healthBar.SetHealth(PlayerData.Health);
-
-        if (PlayerData.Health <= 0F)
+        if (!PlayerData.IsSheildOn)
         {
-            isDead = true;
-            PlayerData.Health = 0F;
+            PlayerData.Health -= damage;
 
             healthBar.SetHealth(PlayerData.Health);
-            camera.transform.DetachChildren();
-            camera.SetActive(false);
 
-            Destroy(this.gameObject);
-            SceneManager.LoadScene("Game Over");
+            if (PlayerData.Health <= 0F)
+            {
+                isDead = true;
+                PlayerData.Health = 0F;
+
+                healthBar.SetHealth(PlayerData.Health);
+                camera.transform.DetachChildren();
+                camera.SetActive(false);
+
+                Destroy(this.gameObject);
+                SceneManager.LoadScene(3);
+            }
+            soundScript.PlayRandomSound(takeDamageSounds); 
         }
-        soundScript.PlayRandomSound(takeDamageSounds);
-
     }
 
     public void UseHealth(float healthIncrease)

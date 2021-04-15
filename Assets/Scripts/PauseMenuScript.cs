@@ -26,25 +26,21 @@ public class PauseMenuScript : MonoBehaviour
         healthBar = FindObjectOfType<HealthBar>();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void PauseGame()
     {
-        if (Input.GetKeyDown(KeyCode.P))
+        if (isGamePaused)
         {
-            if (isGamePaused)
-            {
-                Resume();
-            }
-            else
-            {
-                Pause();
-            }
+            Resume();
+        }
+        else
+        {
+            Pause();
         }
     }
 
     public void Resume()
     {
-        Cursor.lockState = CursorLockMode.Locked;
+        //Cursor.lockState = CursorLockMode.Locked;
         pauseMenu.SetActive(false);
         Time.timeScale = 1F;
         isGamePaused = false;
@@ -52,7 +48,7 @@ public class PauseMenuScript : MonoBehaviour
 
     private void Pause()
     {
-        Cursor.lockState = CursorLockMode.Confined;
+        //Cursor.lockState = CursorLockMode.Confined;
         pauseMenu.SetActive(true);
         Time.timeScale = 0F;
         isGamePaused = true;
