@@ -66,7 +66,7 @@ public class PlayerScript : MonoBehaviour
             CheckingOnGround();
             PlayerMovement();
             RunningAnimation();
-            //PlayerJump();
+            PlayerJump();
         }
     }
 
