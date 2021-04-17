@@ -10,7 +10,7 @@ public class SelectionManager : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Selectable"))
+        if (other.gameObject.CompareTag("Selectable") && PlayerPickUp.isDrop)
         {
             item = other.gameObject;
         }
@@ -23,10 +23,9 @@ public class SelectionManager : MonoBehaviour
             item.GetComponent<PlayerPickUp>().PickUpFunc();
         }
 
-        if (!PlayerPickUp.isDrop)
+        if (PlayerPickUp.isDrop)
         {
             item = null;
         }
     }
-
 }

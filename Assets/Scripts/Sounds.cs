@@ -19,6 +19,7 @@ namespace Assets.Scripts
         {
             source = _source;
             source.clip = clip;
+            source.volume = 0.1F;
         }
 
         public void Play()

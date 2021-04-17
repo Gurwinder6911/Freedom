@@ -159,7 +159,7 @@ public class PlayerScript : MonoBehaviour
                 camera.SetActive(false);
 
                 Destroy(this.gameObject);
-                SceneManager.LoadScene(3);
+                SceneManager.LoadScene(4);
             }
             soundScript.PlayRandomSound(takeDamageSounds); 
         }

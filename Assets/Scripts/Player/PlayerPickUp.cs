@@ -9,7 +9,7 @@ public class PlayerPickUp : MonoBehaviour
     [SerializeField] Transform posPickup;
     [SerializeField] LayerMask wallLayer;
 
-    public static bool isDrop;
+    public static bool isDrop = true;
 
     private Vector3 mousePosition;
     private Rigidbody rigidbody;
@@ -67,7 +67,7 @@ public class PlayerPickUp : MonoBehaviour
     {
         isEquip = false;
         isHolding = false;
-        isDrop = isHolding;
+        isDrop = true;
     }
 
     private void PickUp()
@@ -79,7 +79,7 @@ public class PlayerPickUp : MonoBehaviour
         rigidbody.useGravity = false;
         rigidbody.detectCollisions = true;
         isHolding = true;
-        isDrop = isHolding;
+        isDrop = false;
     }
 
     private void DropObject()

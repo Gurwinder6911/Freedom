@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class EnemyAttackEvent : MonoBehaviour
 {
+    [SerializeField] GameObject shoot;
+    [SerializeField] Transform shootPosition;
+
     float damage = 3;
 
     private PlayerScript player;
@@ -33,7 +36,7 @@ public class EnemyAttackEvent : MonoBehaviour
         {
             if (GameObject.FindGameObjectWithTag("Strong").GetComponent<EnemyScript>().inSight)
             {
-
+                Instantiate(shoot, shootPosition.position, Quaternion.identity);
             }
         }
 
